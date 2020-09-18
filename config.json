@@ -1,0 +1,27 @@
+{
+    "inbounds": 
+    [
+        {
+            "port": 8888,"protocol": "vless",
+            "settings": {"clients": [{"id": "887435cc-f7ba-4c04-9e50-fc6f1e628965"}],"decryption": "none"},
+            "streamSettings": {"network": "ws","wsSettings": {"path": "/"}}
+        }
+    ],
+	
+    "outbounds": 
+    [
+        {"protocol": "freedom","tag": "direct","settings": {}},
+        {"protocol": "socks","tag": "sockstor","settings": {"servers": [{"address": "127.0.0.1","port": 9050}]}},
+        {"protocol": "blackhole","tag": "blocked","settings": {}}
+    ],
+	
+    "routing": 
+    {
+        "rules": 
+        [
+		{"type": "field","outboundTag": "blocked","ip": ["geoip:private","geoip:cn"]},
+		{"type": "field","outboundTag": "blocked","domain": ["geosite:private","geosite:cn","geosite:category-ads-all"]},
+		{"type": "field","outboundTag": "sockstor","domain": ["geosite:tor"]}
+        ]
+    }
+}
